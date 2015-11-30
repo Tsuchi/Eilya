@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Activity_Options"
+            android:label="@string/title_activity_activity__options" >
+        </activity>
+        <activity
+            android:name=".Activity_Filtrage"
+            android:label="@string/title_activity_activity__filtrage" >
+        </activity>
     </application>
 
 </manifest>
