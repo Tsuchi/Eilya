@@ -1,16 +1,31 @@
 package groupeeilya.eilya;
 
+import android.content.Intent;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class Activity_Options extends AppCompatActivity {
+    private GestureDetectorCompat detectSwipe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
+
+        detectSwipe =  new GestureDetectorCompat(this, new MyGestureListener());
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.detectSwipe.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -33,5 +48,33 @@ public class Activity_Options extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //Classe qui va détecter les balayements vers la droite et la gauche sur l'écran
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        //handle 'swipe left' action only
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+
+         /*
+         Toast.makeText(getBaseContext(),
+          event1.toString() + "\n\n" +event2.toString(),
+          Toast.LENGTH_SHORT).show();
+         */
+
+            if(event2.getX() < event1.getX())
+            {
+                Toast.makeText(getBaseContext(), "Swipe left", Toast.LENGTH_SHORT).show();
+
+                //switch another activity
+                Intent intent = new Intent(
+                        Activity_Options.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            return true;
+        }
     }
 }
