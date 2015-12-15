@@ -68,9 +68,11 @@ public class Activity_Filtrage extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Swipe Right", Toast.LENGTH_SHORT).show();
 
                 //switch another activity
-                Intent intent = new Intent(
-                        Activity_Filtrage.this, MainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(
+                        //Activity_Filtrage.this, MainActivity.class);
+                //startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
             }
 
             return true;

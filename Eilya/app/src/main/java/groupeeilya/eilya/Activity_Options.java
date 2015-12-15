@@ -69,9 +69,11 @@ public class Activity_Options extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Swipe left", Toast.LENGTH_SHORT).show();
 
                 //switch another activity
-                Intent intent = new Intent(
-                        Activity_Options.this, MainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(
+                //        Activity_Options.this, MainActivity.class);
+                //startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
             }
 
             return true;

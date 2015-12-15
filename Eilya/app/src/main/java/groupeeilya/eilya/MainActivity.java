@@ -67,12 +67,14 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent openOption = new Intent(this, Activity_Options.class);
         startActivity(openOption);
+        overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
     }
 
     public void Btn_FiltrageOnClick(View view)
     {
         Intent openFiltrage = new Intent(this, Activity_Filtrage.class);
         startActivity(openFiltrage);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
 
     //Classe qui va détecter les balayements vers la droite et la gauche sur l'écran
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(
                         MainActivity.this, Activity_Filtrage.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
             }
 
             if(event2.getX() > event1.getX())
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(
                         MainActivity.this, Activity_Options.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
             }
 
             return true;
