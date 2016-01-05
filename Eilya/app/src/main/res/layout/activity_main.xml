@@ -50,6 +50,14 @@
             android:id="@+id/buttonFiltrage"
             android:onClick="Btn_FiltrageOnClick"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:id="@+id/buttonTest"
+            android:onClick="Btn_TestOnClick"/>
+
     </LinearLayout>
+
 
 </RelativeLayout>

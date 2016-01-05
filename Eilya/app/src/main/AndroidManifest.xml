@@ -24,6 +24,10 @@
             android:name=".Activity_Filtrage"
             android:label="@string/title_activity_activity__filtrage" >
         </activity>
+        <activity
+            android:name=".Activity_SearchResults"
+            android:label="@string/title_activity_activity__searchresults" >
+        </activity>
     </application>
 
 </manifest>
