@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     {
         String keyword = editText_Search.getText().toString();
         editText_Search.setText(""); //Reset of the search bar
-        String url = "https://danbooru.donmai.us/tags.json?search[related_tags]=";
+        String url = "https://danbooru.donmai.us/tags.json?search[name_matches]=";
         url = url.concat("*");
         url = url.concat(keyword);
         url = url.concat("*");
