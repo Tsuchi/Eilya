@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText editText_Search;
@@ -57,12 +60,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void Btn_Search(View view)
     {
-        String keyword = editText_Search.getText().toString();
+        String keywords = editText_Search.getText().toString();
         editText_Search.setText(""); //Reset of the search bar
         String url = "https://danbooru.donmai.us/tags.json?search[name_matches]=";
-        url = url.concat("*");
-        url = url.concat(keyword);
-        url = url.concat("*");
+        String [] tabKeyword = keywords.split(" ");
+
+        for(int i=0; i < tabKeyword.length; i++)
+        {
+            if (i > 0)
+                url = url.concat("+");
+            url = url.concat("*");
+            url = url.concat(tabKeyword[i]);
+            url = url.concat("*");
+        }
         Toast.makeText(this, "" + url, Toast.LENGTH_LONG).show();
     }
 
