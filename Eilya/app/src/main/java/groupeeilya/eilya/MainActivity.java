@@ -59,8 +59,11 @@ public class MainActivity extends AppCompatActivity {
     {
         String keyword = editText_Search.getText().toString();
         editText_Search.setText(""); //Reset of the search bar
-        Toast.makeText(this, "Search with keyword : " + keyword, Toast.LENGTH_LONG).show();
-
+        String url = "https://danbooru.donmai.us/tags.json?search[related_tags]=";
+        url = url.concat("*");
+        url = url.concat(keyword);
+        url = url.concat("*");
+        Toast.makeText(this, "" + url, Toast.LENGTH_LONG).show();
     }
 
     public void Btn_OptionOnClick(View view)
