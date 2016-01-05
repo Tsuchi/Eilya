@@ -58,20 +58,8 @@ public class Activity_Options extends AppCompatActivity {
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY) {
 
-         /*
-         Toast.makeText(getBaseContext(),
-          event1.toString() + "\n\n" +event2.toString(),
-          Toast.LENGTH_SHORT).show();
-         */
-
             if(event2.getX() < event1.getX())
             {
-                Toast.makeText(getBaseContext(), "Swipe left", Toast.LENGTH_SHORT).show();
-
-                //switch another activity
-                //Intent intent = new Intent(
-                //        Activity_Options.this, MainActivity.class);
-                //startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
             }

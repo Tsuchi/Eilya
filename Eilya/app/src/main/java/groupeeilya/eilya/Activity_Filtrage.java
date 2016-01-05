@@ -51,26 +51,11 @@ public class Activity_Filtrage extends AppCompatActivity {
 
     //Classe qui va détecter les balayements vers la droite et la gauche sur l'écran
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-        //handle 'swipe left' action only
-
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY) {
-
-         /*
-         Toast.makeText(getBaseContext(),
-          event1.toString() + "\n\n" +event2.toString(),
-          Toast.LENGTH_SHORT).show();
-         */
-
             if(event2.getX() > event1.getX())
             {
-                Toast.makeText(getBaseContext(), "Swipe Right", Toast.LENGTH_SHORT).show();
-
-                //switch another activity
-                //Intent intent = new Intent(
-                        //Activity_Filtrage.this, MainActivity.class);
-                //startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
             }

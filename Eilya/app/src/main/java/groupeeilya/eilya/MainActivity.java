@@ -85,17 +85,8 @@ public class MainActivity extends AppCompatActivity {
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY) {
 
-         /*
-         Toast.makeText(getBaseContext(),
-          event1.toString() + "\n\n" +event2.toString(),
-          Toast.LENGTH_SHORT).show();
-         */
-
             if(event2.getX() < event1.getX())
             {
-                Toast.makeText(getBaseContext(), "Swipe left", Toast.LENGTH_SHORT).show();
-
-                //switch another activity
                 Intent intent = new Intent(
                         MainActivity.this, Activity_Filtrage.class);
                 startActivity(intent);
@@ -104,9 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
             if(event2.getX() > event1.getX())
             {
-                Toast.makeText(getBaseContext(), "Swipe right", Toast.LENGTH_SHORT).show();
-
-                //switch another activity
                 Intent intent = new Intent(
                         MainActivity.this, Activity_Options.class);
                 startActivity(intent);
