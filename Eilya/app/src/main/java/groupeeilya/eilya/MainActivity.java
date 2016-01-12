@@ -93,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
 
+    public void Btn_TestOnClick(View view)
+    {
+        Intent openTest = new Intent(this, Activity_SearchResults.class);
+        startActivity(openTest);
+        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+    }
+
     //Classe qui va détecter les balayements vers la droite et la gauche sur l'écran
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         //handle 'swipe left' action only
