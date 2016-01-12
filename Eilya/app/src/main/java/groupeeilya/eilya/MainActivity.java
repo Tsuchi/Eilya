@@ -61,19 +61,22 @@ public class MainActivity extends AppCompatActivity {
     public void Btn_Search(View view)
     {
         String keywords = editText_Search.getText().toString();
-        editText_Search.setText(""); //Reset of the search bar
-        String url = "https://danbooru.donmai.us/tags.json?search[name_matches]=";
-        String [] tabKeyword = keywords.split(" ");
+        if(!keywords.isEmpty()) {
+            editText_Search.setText(""); //Reset of the search bar
+            String url = "https://danbooru.donmai.us/tags.json?search[name_matches]=";
+            String[] tabKeyword = keywords.split(" ");
 
-        for(int i=0; i < tabKeyword.length; i++)
-        {
-            if (i > 0)
-                url = url.concat("+");
-            url = url.concat("*");
-            url = url.concat(tabKeyword[i]);
-            url = url.concat("*");
+            for (int i = 0; i < tabKeyword.length; i++) {
+                if (i > 0)
+                    url = url.concat("+");
+                url = url.concat("*");
+                url = url.concat(tabKeyword[i]);
+                url = url.concat("*");
+            }
+            Toast.makeText(this, url.toString(), Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(this, "" + url, Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(this, "Veuillez saisir un ou plusieurs mots-clés", Toast.LENGTH_LONG).show();
     }
 
     public void Btn_OptionOnClick(View view)
