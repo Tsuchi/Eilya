@@ -5,7 +5,51 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="COUCOU LES GENS" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lineSearch">
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:id="@+id/editTextSearch"
+            android:hint="what image ?"
+            android:maxLines="1"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:text="search"
+            android:id="@+id/buttonSearch"
+            android:onClick="Btn_Search"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LineButton"
+        android:layout_below="@id/lineSearch">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Options"
+            android:id="@+id/buttonOption"
+            android:onClick="Btn_OptionOnClick"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="filtrage"
+            android:id="@+id/buttonFiltrage"
+            android:onClick="Btn_FiltrageOnClick"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
