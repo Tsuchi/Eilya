@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(StringBuilder result) {
-         System.out.println(result);
+             str=result.toString();
         }
     }
 
