@@ -7,9 +7,8 @@
     android:background="@color/darkGrey"
     tools:context="groupeeilya.eilya.Activity_SearchResults">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -17,7 +16,7 @@
 
         <ImageView
             android:layout_width="110dp"
-            android:layout_height="160dp"
+            android:layout_height="150"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
@@ -94,6 +93,6 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/test1"/>
         </LinearLayout>
-    </ScrollView>
+
 
 </LinearLayout>
