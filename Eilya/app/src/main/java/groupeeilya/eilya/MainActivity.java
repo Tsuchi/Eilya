@@ -1,6 +1,7 @@
 package groupeeilya.eilya;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,9 +10,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editText_Search;
     private GestureDetectorCompat detectSwipe;
+    private ListView lv_searchHistorique;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +39,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         editText_Search = (EditText) findViewById(R.id.editTextSearch);
-
         detectSwipe =  new GestureDetectorCompat(this, new MyGestureListener());
+        lv_searchHistorique = (ListView) findViewById(R.id.listView_HistoriqueRecherche);
+
+        //Loading searchHistory
+        loadListViewHistorique();
     }
 
     @Override
@@ -61,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
     public void Btn_Search(View view)
     {
         String keywords = editText_Search.getText().toString();
+        LaunchSearchWithKeywords(keywords, true);
+    }
+
+    private void LaunchSearchWithKeywords(String keywords, boolean SaveSearchHistory)
+    {
         if(!keywords.isEmpty()) {
             editText_Search.setText(""); //Reset of the search bar
             String url = "https://danbooru.donmai.us/tags.json?search[name_matches]=";
@@ -74,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 url = url.concat("*");
             }
             Toast.makeText(this, url.toString(), Toast.LENGTH_LONG).show();
+            if(SaveSearchHistory)
+                writeToSearchHistoryfile(tabKeyword);
         }
         else
             Toast.makeText(this, "Veuillez saisir un ou plusieurs mots-clés", Toast.LENGTH_LONG).show();
@@ -98,6 +121,110 @@ public class MainActivity extends AppCompatActivity {
         Intent openTest = new Intent(this, Activity_SearchResults.class);
         startActivity(openTest);
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+    }
+
+    private void writeToSearchHistoryfile(String[] tabkeyword)
+    {
+        FileOutputStream fos = null;
+
+        try {
+            final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Eilya/" );
+
+            if (!dir.exists())
+            {
+                dir.mkdirs();
+            }
+
+            final File myFile = new File(dir, "search_history.txt");
+
+            if (!myFile.exists())
+            {
+                myFile.createNewFile();
+            }
+
+            fos = new FileOutputStream(myFile, true);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            StringBuilder str = new StringBuilder();
+
+            for(int i = 0; i < tabkeyword.length; i++)
+            {
+                str.append(tabkeyword[i]);
+                str.append(" ");
+            }
+            str.append("\n");
+            osw.append(str.toString());
+            osw.close();
+            fos.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        loadListViewHistorique();
+    }
+
+    private void loadListViewHistorique()
+    {
+        ArrayList<String> array_Url = readHistoryFile();
+        // Create ArrayAdapter using the planet list.
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, array_Url);
+        // Set the ArrayAdapter as the ListView's adapter.
+        lv_searchHistorique.setAdapter(listAdapter);
+        lv_searchHistorique.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+                Object o = lv_searchHistorique.getItemAtPosition(position);
+                String str = (String) o;//As you are using Default String Adapter
+                LaunchSearchWithKeywords(((TextView) view).getText().toString(), false);
+            }
+        });
+    }
+
+    private ArrayList<String> readHistoryFile()
+    {
+        //Find the directory for the SD Card using the API
+        File sdcard = Environment.getExternalStorageDirectory();
+
+        //Get the text file
+        File file = new File(sdcard, "/Eilya/search_history.txt");
+
+        //Read text from file
+        StringBuilder text = new StringBuilder();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+            br.close();
+        }
+        catch (IOException e) {
+            //You'll need to add proper error handling here
+        }
+        String str_text = text.toString();
+        String [] tabUrl = str_text.split("\\n");
+        final ArrayList<String> array_Url = new ArrayList<String>();
+        array_Url.addAll(Arrays.asList(tabUrl));
+        return array_Url;
+    }
+
+    public void resetHistory(View view)
+    {
+        //Find the directory for the SD Card using the API
+        File sdcard = Environment.getExternalStorageDirectory();
+
+        //Get the text file
+        File file = new File(sdcard, "/Eilya/search_history.txt");
+
+        boolean deleted = file.delete();
+        if (deleted == true)
+            Toast.makeText(this, "Historique de recherche effacer", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(this, "Echec suppression historique de recherche", Toast.LENGTH_LONG).show();
+
+        loadListViewHistorique();
     }
 
     //Classe qui va détecter les balayements vers la droite et la gauche sur l'écran
@@ -126,6 +253,8 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         }
+
+
     }
 }
 
