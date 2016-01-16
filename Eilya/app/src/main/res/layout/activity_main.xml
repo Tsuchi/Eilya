@@ -59,22 +59,31 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_below="@+id/LineButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:weightSum="1" >
+
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/listView_HistoriqueRecherche"
-        android:layout_below="@+id/LineButton"
         android:layout_centerHorizontal="true"
         android:gravity="center"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Effacer historique"
         android:id="@+id/button_HistoriqueRecherche"
         android:onClick="resetHistory"
         android:layout_below="@id/listView_HistoriqueRecherche"
-        android:layout_centerHorizontal="true" />
+        />
 
+    </LinearLayout>
 
 </RelativeLayout>
