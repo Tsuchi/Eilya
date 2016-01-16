@@ -64,7 +64,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/listView_HistoriqueRecherche"
         android:layout_below="@+id/LineButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
 
     <Button
         android:layout_width="wrap_content"

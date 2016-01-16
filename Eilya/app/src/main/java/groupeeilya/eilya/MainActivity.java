@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 url = url.concat(tabKeyword[i]);
                 url = url.concat("*");
             }
-            Toast.makeText(this, url.toString(), Toast.LENGTH_LONG).show();
-            if(SaveSearchHistory)
+            Toast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
+            if(IsKeywordAlreadyExist(keywords) && SaveSearchHistory)
                 writeToSearchHistoryfile(tabKeyword);
         }
         else
@@ -126,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
     private void writeToSearchHistoryfile(String[] tabkeyword)
     {
         FileOutputStream fos = null;
-
         try {
             final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Eilya/" );
 
@@ -177,6 +176,31 @@ public class MainActivity extends AppCompatActivity {
                 LaunchSearchWithKeywords(((TextView) view).getText().toString(), false);
             }
         });
+    }
+
+    private boolean IsKeywordAlreadyExist(String keywords)
+    {
+        File sdcard = Environment.getExternalStorageDirectory();
+
+        //Get the text file
+        File file = new File(sdcard, "/Eilya/search_history.txt");
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                keywords = keywords.trim();
+                if(line.equalsIgnoreCase(keywords))
+                    return false;
+            }
+            br.close();
+        }
+        catch (IOException e) {
+            //You'll need to add proper error handling here
+        }
+        return true;
     }
 
     private ArrayList<String> readHistoryFile()
