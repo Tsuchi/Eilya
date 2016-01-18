@@ -1,6 +1,7 @@
 package groupeeilya.eilya;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText_Search;
     private GestureDetectorCompat detectSwipe;
     private ListView lv_searchHistorique;
+
+    private DownloadTask jsonconn = null;
+    private String str = "";
+    private String test="http://danbooru.donmai.us/tags.json?search[name_matches]=batman";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,45 @@ public class MainActivity extends AppCompatActivity {
 
         //Loading searchHistory
         loadListViewHistorique();
+
+	jsonconn = new DownloadTask();
+        try{
+            jsonconn.execute(new URL(test));
+        }
+        catch (Exception e)
+        {
+            System.out.print("faux");
+        }
+
+    }
+
+	public class DownloadTask extends AsyncTask<URL, Void, StringBuilder> {
+        @Override
+        protected StringBuilder doInBackground(URL... params) {
+            String result="";
+            StringBuilder resultSB = new StringBuilder();
+            try {
+
+                URL url = new URL("http://danbooru.donmai.us/tags.json?search[name_matches]=batman");
+                URLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                BufferedReader in = new BufferedReader (new InputStreamReader(urlConnection.getInputStream()));
+
+                String line;
+                while ((line = in.readLine()) != null) {
+                    resultSB.append(line);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return resultSB;
+        }
+
+        @Override
+        protected void onPostExecute(StringBuilder result) {
+              str=result.toString();
+        }
     }
 
     @Override
