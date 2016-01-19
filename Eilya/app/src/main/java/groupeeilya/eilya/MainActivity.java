@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 System.out.print("URL");
-                URL url = new URL("http://danbooru.donmai.us/tags.json?search[name_matches]=batman");
-                URLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                //URL url = new URL("http://danbooru.donmai.us/tags.json?search[name_matches]=batman");
+                URLConnection urlConnection = (HttpURLConnection) params[0].openConnection();
                 BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
                 String line;
