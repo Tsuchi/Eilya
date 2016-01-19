@@ -1,6 +1,8 @@
 package groupeeilya.eilya;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.view.GestureDetectorCompat;
@@ -19,6 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +38,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -46,7 +53,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> TabId_url = new ArrayList<String>();
     private DownloadTask jsonconn = null;
     private String str = "";
-    private String test="http://danbooru.donmai.us/tags.json?search[name_matches]=batman";
+    private String test = "http://danbooru.donmai.us/tags.json?search[name_matches]=batman";
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,65 +66,99 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         System.out.print("vrai");
         editText_Search = (EditText) findViewById(R.id.editTextSearch);
-        detectSwipe =  new GestureDetectorCompat(this, new MyGestureListener());
+        detectSwipe = new GestureDetectorCompat(this, new MyGestureListener());
         lv_searchHistorique = (ListView) findViewById(R.id.listView_HistoriqueRecherche);
 
         //Loading searchHistory
         loadListViewHistorique();
+<<<<<<< HEAD
+
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-	public class DownloadTask extends AsyncTask<URL, Void, StringBuilder> {
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://groupeeilya.eilya/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://groupeeilya.eilya/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+=======
+>>>>>>> origin/master
+    }
+
+    public class DownloadTask extends AsyncTask<URL, Void, StringBuilder> {
         @Override
         protected StringBuilder doInBackground(URL... params) {
             String result = "";
             int i = 0;
-
+            int j = 0;
             StringBuilder resultSB = new StringBuilder();
-            System.out.print("faux");
             try {
                 System.out.print("URL");
+<<<<<<< HEAD
+                URL url = new URL("http://danbooru.donmai.us/tags.json?search[name_matches]=batman");
+                URLConnection urlConnection = (HttpURLConnection) url.openConnection();
+=======
                 URLConnection urlConnection = (HttpURLConnection) params[0].openConnection();
                 Log.d("pom", "pompompolmui");
+>>>>>>> origin/master
                 InputStream input = urlConnection.getInputStream();
-                Log.d("Input", "exec de input");
                 BufferedReader in = new BufferedReader(new InputStreamReader(input));
-                Log.d("in", "buffer");
                 String line;
                 while ((line = in.readLine()) != null) {
                     resultSB.append(line);
-                    str=resultSB.toString();
-                    Log.d("while", "while");
+                    str = resultSB.toString();
                 }
-                Log.d("lol","WHILE");
             } catch (Exception e) {
-                Log.d("catch", "catchWHILE");
                 e.printStackTrace();
             }
             return resultSB;
         }
+
         @Override
         protected void onPostExecute(StringBuilder result)
         {
-            int i=0;
-            str=result.toString();
-            Log.d("ah", "onPost");
-            try {
-                JSONArray jsonArray = new JSONArray(str);
-                for(i=0; i < jsonArray.length(); i++)
-                {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    TabId_url.add(jsonObject.getString("id"));
 
-                }
-            }
-            catch (JSONException e)
-            {
-                Log.d("JSON", "JSONException");
-            }
+
+
+
         }
     }
-
-
 
 
     @Override
@@ -143,15 +189,52 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void Btn_Search(View view)
-    {
+    public void Btn_Search(View view) {
         String keywords = editText_Search.getText().toString();
         LaunchSearchWithKeywords(keywords, true);
+<<<<<<< HEAD
+        jsonconn = new DownloadTask();
+        try {
+            System.out.print("vrai");
+            jsonconn.execute(new URL(test));
+        } catch (Exception e) {
+            System.out.print("faux");
+        }
+=======
+>>>>>>> origin/master
+    }
+    public void Get_ID(StringBuilder string)
+    {
+        String lien;
+        int i = 0;
+        int j=0;
+        str = string.toString();
+        try {
+            JSONArray jsonArray = new JSONArray(str);
+            for (i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                TabId_url.add(jsonObject.getString("id"));
+                String[] simpleArray = TabId_url.toArray(new String[TabId_url.size()]);
+                for (j = 0; j < TabId_url.size(); j++) {
+                    lien = "https://danbooru.donmai.us/posts/";
+                    lien = lien + simpleArray[j] + ".json";
+                    URL url2 = new URL(lien);
+                    jsonconn.execute(url2);
+                }
+            }
+        } catch (JSONException e) {
+            Log.d("JSON", "JSONException");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void Get_ImageLink(StringBuilder string)
+    {
+
     }
 
-    private void LaunchSearchWithKeywords(String keywords, boolean SaveSearchHistory)
-    {
-        if(!keywords.isEmpty()) {
+    private void LaunchSearchWithKeywords(String keywords, boolean SaveSearchHistory) {
+        if (!keywords.isEmpty()) {
             editText_Search.setText(""); //Reset of the search bar
             String url = "https://danbooru.donmai.us/tags.json?search[name_matches]=";
             String[] tabKeyword = keywords.split(" ");
@@ -163,6 +246,12 @@ public class MainActivity extends AppCompatActivity {
                 url = url.concat(tabKeyword[i]);
                 url = url.concat("*");
             }
+<<<<<<< HEAD
+            Toast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
+            if (IsKeywordAlreadyExist(keywords) && SaveSearchHistory)
+                writeToSearchHistoryfile(tabKeyword);
+        } else
+=======
             //Toast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
             if(IsKeywordAlreadyExist(keywords) && SaveSearchHistory)
                 writeToSearchHistoryfile(tabKeyword);
@@ -177,45 +266,40 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else
+>>>>>>> origin/master
             Toast.makeText(this, "Veuillez saisir un ou plusieurs mots-clés", Toast.LENGTH_LONG).show();
     }
 
-    public void Btn_OptionOnClick(View view)
-    {
+    public void Btn_OptionOnClick(View view) {
         Intent openOption = new Intent(this, Activity_Options.class);
         startActivity(openOption);
         overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
     }
 
-    public void Btn_FiltrageOnClick(View view)
-    {
+    public void Btn_FiltrageOnClick(View view) {
         Intent openFiltrage = new Intent(this, Activity_Filtrage.class);
         startActivity(openFiltrage);
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
 
-    public void Btn_TestOnClick(View view)
-    {
+    public void Btn_TestOnClick(View view) {
         Intent openTest = new Intent(this, Activity_SearchResults.class);
         startActivity(openTest);
         //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
     }
 
-    private void writeToSearchHistoryfile(String[] tabkeyword)
-    {
+    private void writeToSearchHistoryfile(String[] tabkeyword) {
         FileOutputStream fos = null;
         try {
-            final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Eilya/" );
+            final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Eilya/");
 
-            if (!dir.exists())
-            {
+            if (!dir.exists()) {
                 dir.mkdirs();
             }
 
             final File myFile = new File(dir, "search_history.txt");
 
-            if (!myFile.exists())
-            {
+            if (!myFile.exists()) {
                 myFile.createNewFile();
             }
 
@@ -223,8 +307,7 @@ public class MainActivity extends AppCompatActivity {
             OutputStreamWriter osw = new OutputStreamWriter(fos);
             StringBuilder str = new StringBuilder();
 
-            for(int i = 0; i < tabkeyword.length; i++)
-            {
+            for (int i = 0; i < tabkeyword.length; i++) {
                 str.append(tabkeyword[i]);
                 str.append(" ");
             }
@@ -241,8 +324,7 @@ public class MainActivity extends AppCompatActivity {
         loadListViewHistorique();
     }
 
-    private void loadListViewHistorique()
-    {
+    private void loadListViewHistorique() {
         ArrayList<String> array_Url = readHistoryFile();
         // Create ArrayAdapter using the planet list.
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, array_Url);
@@ -258,8 +340,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean IsKeywordAlreadyExist(String keywords)
-    {
+    private boolean IsKeywordAlreadyExist(String keywords) {
         File sdcard = Environment.getExternalStorageDirectory();
 
         //Get the text file
@@ -272,19 +353,17 @@ public class MainActivity extends AppCompatActivity {
             while ((line = br.readLine()) != null) {
                 line = line.trim();
                 keywords = keywords.trim();
-                if(line.equalsIgnoreCase(keywords))
+                if (line.equalsIgnoreCase(keywords))
                     return false;
             }
             br.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             //You'll need to add proper error handling here
         }
         return true;
     }
 
-    private ArrayList<String> readHistoryFile()
-    {
+    private ArrayList<String> readHistoryFile() {
         //Find the directory for the SD Card using the API
         File sdcard = Environment.getExternalStorageDirectory();
 
@@ -303,19 +382,17 @@ public class MainActivity extends AppCompatActivity {
                 text.append('\n');
             }
             br.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             //You'll need to add proper error handling here
         }
         String str_text = text.toString();
-        String [] tabUrl = str_text.split("\\n");
+        String[] tabUrl = str_text.split("\\n");
         final ArrayList<String> array_Url = new ArrayList<String>();
         array_Url.addAll(Arrays.asList(tabUrl));
         return array_Url;
     }
 
-    public void resetHistory(View view)
-    {
+    public void resetHistory(View view) {
         //Find the directory for the SD Card using the API
         File sdcard = Environment.getExternalStorageDirectory();
 
@@ -339,16 +416,14 @@ public class MainActivity extends AppCompatActivity {
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY) {
 
-            if(event2.getX() < event1.getX())
-            {
+            if (event2.getX() < event1.getX()) {
                 Intent intent = new Intent(
                         MainActivity.this, Activity_Filtrage.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
             }
 
-            if(event2.getX() > event1.getX())
-            {
+            if (event2.getX() > event1.getX()) {
                 Intent intent = new Intent(
                         MainActivity.this, Activity_Options.class);
                 startActivity(intent);
