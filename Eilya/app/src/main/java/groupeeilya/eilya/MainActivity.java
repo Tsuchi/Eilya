@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
     {
         String keywords = editText_Search.getText().toString();
         LaunchSearchWithKeywords(keywords, true);
-
     }
 
     private void LaunchSearchWithKeywords(String keywords, boolean SaveSearchHistory)
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 url = url.concat(tabKeyword[i]);
                 url = url.concat("*");
             }
-            //sToast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
             if(IsKeywordAlreadyExist(keywords) && SaveSearchHistory)
                 writeToSearchHistoryfile(tabKeyword);
             jsonconn = new DownloadTask();
