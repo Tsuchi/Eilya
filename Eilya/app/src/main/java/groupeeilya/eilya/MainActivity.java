@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent openTest = new Intent(this, Activity_SearchResults.class);
         startActivity(openTest);
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+        //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
     }
 
     private void writeToSearchHistoryfile(String[] tabkeyword)
@@ -232,7 +232,9 @@ public class MainActivity extends AppCompatActivity {
             osw.append(str.toString());
             osw.close();
             fos.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
