@@ -71,10 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Loading searchHistory
         loadListViewHistorique();
-<<<<<<< HEAD
 
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        /*// ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
@@ -116,9 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 Uri.parse("android-app://groupeeilya.eilya/http/host/path")
         );
         AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-=======
->>>>>>> origin/master
+        client.disconnect();*/
     }
 
     public class DownloadTask extends AsyncTask<URL, Void, StringBuilder> {
@@ -130,13 +127,9 @@ public class MainActivity extends AppCompatActivity {
             StringBuilder resultSB = new StringBuilder();
             try {
                 System.out.print("URL");
-<<<<<<< HEAD
-                URL url = new URL("http://danbooru.donmai.us/tags.json?search[name_matches]=batman");
-                URLConnection urlConnection = (HttpURLConnection) url.openConnection();
-=======
+
                 URLConnection urlConnection = (HttpURLConnection) params[0].openConnection();
                 Log.d("pom", "pompompolmui");
->>>>>>> origin/master
                 InputStream input = urlConnection.getInputStream();
                 BufferedReader in = new BufferedReader(new InputStreamReader(input));
                 String line;
@@ -192,16 +185,6 @@ public class MainActivity extends AppCompatActivity {
     public void Btn_Search(View view) {
         String keywords = editText_Search.getText().toString();
         LaunchSearchWithKeywords(keywords, true);
-<<<<<<< HEAD
-        jsonconn = new DownloadTask();
-        try {
-            System.out.print("vrai");
-            jsonconn.execute(new URL(test));
-        } catch (Exception e) {
-            System.out.print("faux");
-        }
-=======
->>>>>>> origin/master
     }
     public void Get_ID(StringBuilder string)
     {
@@ -246,12 +229,6 @@ public class MainActivity extends AppCompatActivity {
                 url = url.concat(tabKeyword[i]);
                 url = url.concat("*");
             }
-<<<<<<< HEAD
-            Toast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
-            if (IsKeywordAlreadyExist(keywords) && SaveSearchHistory)
-                writeToSearchHistoryfile(tabKeyword);
-        } else
-=======
             //Toast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
             if(IsKeywordAlreadyExist(keywords) && SaveSearchHistory)
                 writeToSearchHistoryfile(tabKeyword);
@@ -266,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else
->>>>>>> origin/master
             Toast.makeText(this, "Veuillez saisir un ou plusieurs mots-clés", Toast.LENGTH_LONG).show();
     }
 
