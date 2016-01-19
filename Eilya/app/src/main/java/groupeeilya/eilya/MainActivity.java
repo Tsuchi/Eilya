@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Loading searchHistory
         loadListViewHistorique();
-
-
-
     }
 
 	public class DownloadTask extends AsyncTask<URL, Void, StringBuilder> {
@@ -75,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 System.out.print("URL");
                 URLConnection urlConnection = (HttpURLConnection) params[0].openConnection();
-
                 Log.d("pom", "pompompolmui");
                 InputStream input = urlConnection.getInputStream();
                 Log.d("Input", "exec de input");
@@ -151,15 +147,7 @@ public class MainActivity extends AppCompatActivity {
     {
         String keywords = editText_Search.getText().toString();
         LaunchSearchWithKeywords(keywords, true);
-        jsonconn = new DownloadTask();
-        try{
-            System.out.print("vrai");
-            jsonconn.execute(new URL(test));
-        }
-        catch (Exception e)
-        {
-            System.out.print("faux");
-        }
+
     }
 
     private void LaunchSearchWithKeywords(String keywords, boolean SaveSearchHistory)
@@ -176,9 +164,18 @@ public class MainActivity extends AppCompatActivity {
                 url = url.concat(tabKeyword[i]);
                 url = url.concat("*");
             }
-            Toast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
+            //sToast.makeText(this, url.toString(), Toast.LENGTH_SHORT).show();
             if(IsKeywordAlreadyExist(keywords) && SaveSearchHistory)
                 writeToSearchHistoryfile(tabKeyword);
+            jsonconn = new DownloadTask();
+            try{
+                System.out.print("vrai");
+                jsonconn.execute(new URL(url));
+            }
+            catch (Exception e)
+            {
+                System.out.print("faux");
+            }
         }
         else
             Toast.makeText(this, "Veuillez saisir un ou plusieurs mots-clés", Toast.LENGTH_LONG).show();
