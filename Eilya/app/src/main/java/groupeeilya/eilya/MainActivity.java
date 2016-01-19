@@ -18,6 +18,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText_Search;
     private GestureDetectorCompat detectSwipe;
     private ListView lv_searchHistorique;
-
+    private ArrayList<String> TabId_url = new ArrayList<String>();
     private DownloadTask jsonconn = null;
     private String str = "";
     private String test="http://danbooru.donmai.us/tags.json?search[name_matches]=batman";
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
 	jsonconn = new DownloadTask();
         try{
+            System.out.print("vrai");
             jsonconn.execute(new URL(test));
         }
         catch (Exception e)
@@ -68,31 +73,54 @@ public class MainActivity extends AppCompatActivity {
 	public class DownloadTask extends AsyncTask<URL, Void, StringBuilder> {
         @Override
         protected StringBuilder doInBackground(URL... params) {
-            String result="";
-            StringBuilder resultSB = new StringBuilder();
-            try {
+            String result = "";
+            int i = 0;
 
+            StringBuilder resultSB = new StringBuilder();
+
+            try {
+                System.out.print("URL");
                 URL url = new URL("http://danbooru.donmai.us/tags.json?search[name_matches]=batman");
                 URLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                BufferedReader in = new BufferedReader (new InputStreamReader(urlConnection.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
                 String line;
                 while ((line = in.readLine()) != null) {
                     resultSB.append(line);
+                    str=resultSB.toString();
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return resultSB;
         }
-
         @Override
-        protected void onPostExecute(StringBuilder result) {
-              str=result.toString();
+        protected void onPostExecute(StringBuilder result)
+        {
+            int i=0;
+            str=result.toString();
+            System.out.printf("AAAA1");
+            try {
+                JSONArray jsonArray = new JSONArray(str);
+                for(i=0; i < jsonArray.length(); i++)
+                {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    TabId_url.add(jsonObject.getString("id"));
+
+
+                    System.out.printf("AAAA");
+                }
+            }
+            catch (JSONException e)
+            {
+                System.out.printf("faux");
+            }
         }
     }
+
+
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
