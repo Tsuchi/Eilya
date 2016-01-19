@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        System.out.print("vrai");
         editText_Search = (EditText) findViewById(R.id.editTextSearch);
         detectSwipe =  new GestureDetectorCompat(this, new MyGestureListener());
         lv_searchHistorique = (ListView) findViewById(R.id.listView_HistoriqueRecherche);
@@ -58,15 +60,7 @@ public class MainActivity extends AppCompatActivity {
         //Loading searchHistory
         loadListViewHistorique();
 
-	jsonconn = new DownloadTask();
-        try{
-            System.out.print("vrai");
-            jsonconn.execute(new URL(test));
-        }
-        catch (Exception e)
-        {
-            System.out.print("faux");
-        }
+
 
     }
 
@@ -77,20 +71,25 @@ public class MainActivity extends AppCompatActivity {
             int i = 0;
 
             StringBuilder resultSB = new StringBuilder();
-
+            System.out.print("faux");
             try {
                 System.out.print("URL");
-                //URL url = new URL("http://danbooru.donmai.us/tags.json?search[name_matches]=batman");
                 URLConnection urlConnection = (HttpURLConnection) params[0].openConnection();
-                BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 
+                Log.d("pom", "pompompolmui");
+                InputStream input = urlConnection.getInputStream();
+                Log.d("Input", "exec de input");
+                BufferedReader in = new BufferedReader(new InputStreamReader(input));
+                Log.d("in", "buffer");
                 String line;
                 while ((line = in.readLine()) != null) {
                     resultSB.append(line);
                     str=resultSB.toString();
+                    Log.d("while", "while");
                 }
-
+                Log.d("lol","WHILE");
             } catch (Exception e) {
+                Log.d("catch", "catchWHILE");
                 e.printStackTrace();
             }
             return resultSB;
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         {
             int i=0;
             str=result.toString();
-            System.out.printf("AAAA1");
+            Log.d("ah", "onPost");
             try {
                 JSONArray jsonArray = new JSONArray(str);
                 for(i=0; i < jsonArray.length(); i++)
@@ -108,13 +107,11 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     TabId_url.add(jsonObject.getString("id"));
 
-
-                    System.out.printf("AAAA");
                 }
             }
             catch (JSONException e)
             {
-                System.out.printf("faux");
+                Log.d("JSON", "JSONException");
             }
         }
     }
@@ -154,6 +151,15 @@ public class MainActivity extends AppCompatActivity {
     {
         String keywords = editText_Search.getText().toString();
         LaunchSearchWithKeywords(keywords, true);
+        jsonconn = new DownloadTask();
+        try{
+            System.out.print("vrai");
+            jsonconn.execute(new URL(test));
+        }
+        catch (Exception e)
+        {
+            System.out.print("faux");
+        }
     }
 
     private void LaunchSearchWithKeywords(String keywords, boolean SaveSearchHistory)
