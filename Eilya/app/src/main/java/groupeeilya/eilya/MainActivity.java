@@ -271,6 +271,14 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Veuillez saisir un ou plusieurs mots-clés", Toast.LENGTH_LONG).show();
     }
 
+    //Fonction a appelé quand on aura récupérer toute les info en fonction de la recherche pour les envoyé a Bastien
+    private void passDataToSearchResultsActivity(String[] tabUrl)
+    {
+        Intent intent = new Intent(this, SearchResultsActivity.class);
+        intent.putExtra("tabUrl", tabUrl);
+        startActivity(intent);
+    }
+
     public void Btn_OptionOnClick(View view) {
         Intent openOption = new Intent(this, Activity_Options.class);
         startActivity(openOption);
