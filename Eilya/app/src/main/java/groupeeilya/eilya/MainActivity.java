@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private GestureDetectorCompat detectSwipe;
     private ListView lv_searchHistorique;
     private ArrayList<String> TabId_url = new ArrayList<String>();
+    private ArrayList<String> Tab_preview = new ArrayList<String>();
     private DownloadTask jsonconn = null;
     private String str = "";
     private String test = "http://danbooru.donmai.us/tags.json?search[name_matches]=batman";
@@ -198,7 +199,8 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 TabId_url.add(jsonObject.getString("id"));
                 String[] simpleArray = TabId_url.toArray(new String[TabId_url.size()]);
-                for (j = 0; j < TabId_url.size(); j++) {
+                for (j = 0; j < TabId_url.size(); j++)
+                {
                     lien = "https://danbooru.donmai.us/posts/";
                     lien = lien + simpleArray[j] + ".json";
                     URL url2 = new URL(lien);
@@ -213,6 +215,29 @@ public class MainActivity extends AppCompatActivity {
     }
     public void Get_ImageLink(StringBuilder string)
     {
+            int i=0;
+            str = string.toString();
+        JSONArray jsonArray = null;
+        try
+        {
+            jsonArray = new JSONArray(str);
+            for (i = 0; i < jsonArray.length(); i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Tab_preview.add(jsonObject.getString("preview_file_url"));
+                String[] simpleArray = Tab_preview.toArray(new String[Tab_preview.size()]);
+                for (int j = 0 ; j<(Tab_preview.size()) ; j++)
+                {
+                    simpleArray[j]="https://danbooru.donmai.us"+simpleArray[j];
+                }
+            }
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+
 
     }
 
