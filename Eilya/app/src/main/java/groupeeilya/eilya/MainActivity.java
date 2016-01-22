@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
 
         boolean deleted = file.delete();
         if (deleted == true)
-            Toast.makeText(this, "Historique de recherche effacer", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Historique de recherche effacé", Toast.LENGTH_LONG).show();
         else
             Toast.makeText(this, "Echec suppression historique de recherche", Toast.LENGTH_LONG).show();
 
