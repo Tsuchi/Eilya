@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> TabId_url = new ArrayList<String>();
     private ArrayList<String> Tab_preview = new ArrayList<String>();
     private DownloadTask jsonconn = null;
+    private int flag=1;
     private String str = "";
     private String test = "http://danbooru.donmai.us/tags.json?search[name_matches]=batman";
     /**
@@ -152,7 +153,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(StringBuilder result)
         {
+            switch (flag){
+                case 1:
+                    Log.d("pom", result.toString());
+                    Get_ID(result);
+                    break;
 
+                case 2:
+                    Log.d("pom", "case2");
+                    Get_ImageLink(result);
+                    break;
+
+
+            }
 
 
 
@@ -239,7 +252,8 @@ public class MainActivity extends AppCompatActivity {
                     lien = "https://danbooru.donmai.us/posts/";
                     lien = lien + simpleArray[j] + ".json";
                     URL url2 = new URL(lien);
-                    jsonconn.execute(url2);
+                    flag=2;
+                    new DownloadTask().execute(url2);
                 }
             }
         } catch (JSONException e) {
@@ -252,20 +266,22 @@ public class MainActivity extends AppCompatActivity {
     {
             int i=0;
             str = string.toString();
-        JSONArray jsonArray = null;
+
         try
         {
-            jsonArray = new JSONArray(str);
-            for (i = 0; i < jsonArray.length(); i++)
+            JSONArray jsonArray2 = new JSONArray(str);
+            for (i = 0; i < jsonArray2.length(); i++)
             {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                JSONObject jsonObject = jsonArray2.getJSONObject(i);
                 Tab_preview.add(jsonObject.getString("preview_file_url"));
                 String[] simpleArray = Tab_preview.toArray(new String[Tab_preview.size()]);
                 for (int j = 0 ; j<(Tab_preview.size()) ; j++)
                 {
                     simpleArray[j]="https://danbooru.donmai.us"+simpleArray[j];
+                    Log.d("pom", simpleArray[j]);
                 }
             }
+            jsonconn.cancel(true);
         }
         catch (JSONException e)
         {
