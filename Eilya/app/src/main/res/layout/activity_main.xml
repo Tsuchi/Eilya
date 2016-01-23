@@ -86,6 +86,15 @@
         android:layout_below="@id/listView_HistoriqueRecherche"
         />
 
+
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LineButton"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal" />
+
 
 </RelativeLayout>

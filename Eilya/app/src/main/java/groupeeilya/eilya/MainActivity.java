@@ -2,6 +2,9 @@ package groupeeilya.eilya;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
         client.disconnect();*/
     }
 
-    public class DownloadTask extends AsyncTask<URL, Void, StringBuilder> {
+    public class DownloadTask extends AsyncTask<URL, Void, StringBuilder>
+    {
         @Override
         protected StringBuilder doInBackground(URL... params) {
             String result = "";
@@ -151,6 +156,36 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        }
+    }
+
+    //A METTRE DANS LACTIVITE OU ON AFFICHERA LES IMAGES (SI BASTIEN N'AS PAS DEJA FAIT SA)
+    public class DownloadImage extends AsyncTask<URL, Void, Bitmap>
+    {
+        @Override
+        protected Bitmap doInBackground(URL... params) {
+            URL url2 = null;
+            try {
+                url2 = new URL("https://danbooru.donmai.us/data/preview/d34e4cf0a437a5d65f8e82b7bcd02606.jpg");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            Bitmap bmp = null;
+            try {
+                bmp = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+           return bmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bmp)
+        {
+            ImageView iv = (ImageView) findViewById(R.id.imageView);
+            iv.setImageBitmap(bmp);
         }
     }
 
@@ -265,6 +300,15 @@ public class MainActivity extends AppCompatActivity {
             catch (Exception e)
             {
                 System.out.print("faux");
+            }
+
+            DownloadImage di = new DownloadImage();
+            try{
+                di.execute();
+            }
+            catch(Exception e)
+            {
+                System.out.print(e + "\n");
             }
         }
         else
