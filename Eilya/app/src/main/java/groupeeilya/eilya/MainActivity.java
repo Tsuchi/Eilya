@@ -177,15 +177,9 @@ public class MainActivity extends AppCompatActivity {
     {
         @Override
         protected Bitmap doInBackground(URL... params) {
-            URL url2 = null;
-            try {
-                url2 = new URL("https://danbooru.donmai.us/data/preview/d34e4cf0a437a5d65f8e82b7bcd02606.jpg");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
             Bitmap bmp = null;
             try {
-                bmp = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
+                bmp = BitmapFactory.decodeStream(params[0].openConnection().getInputStream());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -318,9 +312,10 @@ public class MainActivity extends AppCompatActivity {
                 System.out.print("faux");
             }
 
+            //PARTI A METTRE SUR L'ACTIVITE DE BASTIEN POUR RECUPERER LES IMAGES EN FONCTION DE LEUR URL
             DownloadImage di = new DownloadImage();
             try{
-                di.execute();
+                di.execute(new URL("https://danbooru.donmai.us/data/preview/d34e4cf0a437a5d65f8e82b7bcd02606.jpg"));
             }
             catch(Exception e)
             {
