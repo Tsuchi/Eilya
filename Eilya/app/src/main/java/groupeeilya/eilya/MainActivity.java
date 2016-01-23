@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         {
             switch (flag){
                 case 1:
-                    Log.d("pom", "case1");
+                    Log.d("pom", result.toString());
                     Get_ID(result);
                     break;
 
@@ -231,13 +231,13 @@ public class MainActivity extends AppCompatActivity {
     {
             int i=0;
             str = string.toString();
-        JSONArray jsonArray = null;
+
         try
         {
-            jsonArray = new JSONArray(str);
-            for (i = 0; i < jsonArray.length(); i++)
+            JSONArray jsonArray2 = new JSONArray(str);
+            for (i = 0; i < jsonArray2.length(); i++)
             {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                JSONObject jsonObject = jsonArray2.getJSONObject(i);
                 Tab_preview.add(jsonObject.getString("preview_file_url"));
                 String[] simpleArray = Tab_preview.toArray(new String[Tab_preview.size()]);
                 for (int j = 0 ; j<(Tab_preview.size()) ; j++)
