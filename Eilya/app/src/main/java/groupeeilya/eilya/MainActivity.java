@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     private int flag=1;
     private int count=0;
     private String str = "";
-    private String test = "http://danbooru.donmai.us/tags.json?search[name_matches]=batman";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -165,12 +164,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("pom", "case2");
                     Get_ImageLink(result);
                     break;
-
-
             }
-
-
-
         }
     }
 
@@ -261,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     public void Get_ImageLink(StringBuilder string)
     {
             int i=0;
@@ -290,9 +285,6 @@ public class MainActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-
-
-
     }
 
     private void LaunchSearchWithKeywords(String keywords, boolean SaveSearchHistory) {
@@ -321,9 +313,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 System.out.print("faux");
             }
-
             //PARTI A METTRE SUR L'ACTIVITE DE BASTIEN POUR RECUPERER LES IMAGES EN FONCTION DE LEUR URL
-
         }
         else
             Toast.makeText(this, "Veuillez saisir un ou plusieurs mots-clés", Toast.LENGTH_LONG).show();
@@ -496,7 +486,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right_out, R.anim.slide_right_in);
             }
-
             return true;
         }
 
