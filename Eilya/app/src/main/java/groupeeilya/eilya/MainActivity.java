@@ -275,7 +275,14 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Work_plz",Tab_preview.get(count));
             count++;
 
-
+            DownloadImage di = new DownloadImage();
+            try{
+                di.execute(new URL(Tab_preview.get(0)));
+            }
+            catch(Exception e)
+            {
+                System.out.print(e + " rater \n");
+            }
             jsonconn.cancel(true);
         }
         catch (JSONException e)
@@ -314,14 +321,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //PARTI A METTRE SUR L'ACTIVITE DE BASTIEN POUR RECUPERER LES IMAGES EN FONCTION DE LEUR URL
-            DownloadImage di = new DownloadImage();
-            try{
-                di.execute(new URL(Tab_preview.get(0)));
-            }
-            catch(Exception e)
-            {
-                System.out.print(e + "\n");
-            }
+
         }
         else
             Toast.makeText(this, "Veuillez saisir un ou plusieurs mots-clés", Toast.LENGTH_LONG).show();
