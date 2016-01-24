@@ -56,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
     private ListView lv_searchHistorique;
     private ArrayList<String> TabId_url = new ArrayList<String>();
     private ArrayList<String> Tab_preview = new ArrayList<String>();
+    private String lien_img;
     private DownloadTask jsonconn = null;
     private int flag=1;
+    private int count=0;
     private String str = "";
     private String test = "http://danbooru.donmai.us/tags.json?search[name_matches]=batman";
     /**
@@ -263,18 +265,14 @@ public class MainActivity extends AppCompatActivity {
 
         try
         {
-            JSONArray jsonArray2 = new JSONArray(str);
-            for (i = 0; i < jsonArray2.length(); i++)
-            {
-                JSONObject jsonObject = jsonArray2.getJSONObject(i);
-                Tab_preview.add(jsonObject.getString("preview_file_url"));
-                String[] simpleArray = Tab_preview.toArray(new String[Tab_preview.size()]);
-                for (int j = 0 ; j<(Tab_preview.size()) ; j++)
-                {
-                    simpleArray[j]="https://danbooru.donmai.us"+simpleArray[j];
-                    Log.d("pom", simpleArray[j]);
-                }
-            }
+            JSONObject jsonObject = new JSONObject(str);
+            lien_img=jsonObject.getString("preview_file_url");
+            lien_img="https://danbooru.donmai.us"+lien_img;
+            Tab_preview.add(lien_img);
+            Log.d("Work_plz",Tab_preview.get(count));
+            count++;
+
+
             jsonconn.cancel(true);
         }
         catch (JSONException e)
@@ -315,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
             //PARTI A METTRE SUR L'ACTIVITE DE BASTIEN POUR RECUPERER LES IMAGES EN FONCTION DE LEUR URL
             DownloadImage di = new DownloadImage();
             try{
-                di.execute(new URL("https://danbooru.donmai.us/data/preview/d34e4cf0a437a5d65f8e82b7bcd02606.jpg"));
+                di.execute(new URL(Tab_preview.get(0)));
             }
             catch(Exception e)
             {
