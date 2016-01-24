@@ -195,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         {
             ImageView iv = (ImageView) findViewById(R.id.imageView);
             iv.setImageBitmap(bmp);
+            jsonconn.cancel(true);
         }
     }
 
@@ -237,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
         int i = 0;
         int j=0;
         str = string.toString();
+        TabId_url.clear();
         try {
             JSONArray jsonArray = new JSONArray(str);
             for (i = 0; i < jsonArray.length(); i++)
@@ -246,15 +248,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
             String[] simpleArray = TabId_url.toArray(new String[TabId_url.size()]);
-                for (j = 0; j < TabId_url.size(); j++)
-                {
+                for (j = 0; j < TabId_url.size(); j++) {
                     lien = "https://danbooru.donmai.us/posts/";
                     lien = lien + simpleArray[j] + ".json";
                     URL url2 = new URL(lien);
-                    flag=2;
+                    flag = 2;
                     new DownloadTask().execute(url2);
                 }
-
         } catch (JSONException e) {
             Log.d("JSON", "JSONException");
         } catch (MalformedURLException e) {
@@ -265,7 +265,8 @@ public class MainActivity extends AppCompatActivity {
     {
             int i=0;
             str = string.toString();
-
+            Tab_preview.clear();
+            count = 0;
         try
         {
             JSONObject jsonObject = new JSONObject(str);
@@ -277,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
 
             DownloadImage di = new DownloadImage();
             try{
-                di.execute(new URL(Tab_preview.get(0)));
+                di.execute(new URL(Tab_preview.get(count - 1)));
             }
             catch(Exception e)
             {
@@ -296,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void LaunchSearchWithKeywords(String keywords, boolean SaveSearchHistory) {
         if (!keywords.isEmpty()) {
+            flag = 1;
             editText_Search.setText(""); //Reset of the search bar
             String url = "https://danbooru.donmai.us/tags.json?search[name_matches]=";
             String[] tabKeyword = keywords.split(" ");
