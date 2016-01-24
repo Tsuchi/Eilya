@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         {
             switch (flag){
                 case 1:
-                    Log.d("pom", result.toString());
+                    Log.d("Case1", result.toString());
                     Get_ID(result);
                     break;
 
@@ -239,10 +239,13 @@ public class MainActivity extends AppCompatActivity {
         str = string.toString();
         try {
             JSONArray jsonArray = new JSONArray(str);
-            for (i = 0; i < jsonArray.length(); i++) {
+            for (i = 0; i < jsonArray.length(); i++)
+            {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 TabId_url.add(jsonObject.getString("id"));
-                String[] simpleArray = TabId_url.toArray(new String[TabId_url.size()]);
+
+            }
+            String[] simpleArray = TabId_url.toArray(new String[TabId_url.size()]);
                 for (j = 0; j < TabId_url.size(); j++)
                 {
                     lien = "https://danbooru.donmai.us/posts/";
@@ -251,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                     flag=2;
                     new DownloadTask().execute(url2);
                 }
-            }
+
         } catch (JSONException e) {
             Log.d("JSON", "JSONException");
         } catch (MalformedURLException e) {
