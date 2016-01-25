@@ -56,16 +56,12 @@ public class MainActivity extends AppCompatActivity {
     private ListView lv_searchHistorique;
     private ArrayList<String> TabId_url = new ArrayList<String>();
     private ArrayList<String> Tab_preview = new ArrayList<String>();
+    private ArrayList<String> Tab_img = new ArrayList<String>();
     private String lien_img;
     private DownloadTask jsonconn = null;
     private int flag=1;
     private int count=0;
     private String str = "";
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,51 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Loading searchHistory
         loadListViewHistorique();
-
-
-        /*// ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://groupeeilya.eilya/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://groupeeilya.eilya/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();*/
     }
 
     public class DownloadTask extends AsyncTask<URL, Void, StringBuilder>
@@ -231,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         String lien;
         int i = 0;
         int j=0;
+
         str = string.toString();
         TabId_url.clear();
         try {
@@ -260,20 +212,26 @@ public class MainActivity extends AppCompatActivity {
     {
             int i=0;
             str = string.toString();
+            String lien_img_full;
             Tab_preview.clear();
+            Tab_img.clear();
             count = 0;
         try
         {
             JSONObject jsonObject = new JSONObject(str);
             lien_img=jsonObject.getString("preview_file_url");
+            lien_img_full = jsonObject.getString("file_url");
             lien_img="https://danbooru.donmai.us"+lien_img;
+            lien_img_full = "https://danbooru.donmai.us"+lien_img_full;
             Tab_preview.add(lien_img);
+            Tab_img.add(lien_img_full);
             Log.d("Work_plz",Tab_preview.get(count));
             count++;
 
             DownloadImage di = new DownloadImage();
             try{
                 di.execute(new URL(Tab_preview.get(count - 1)));
+                //di.execute(new URL(Tab_img.get(count - 1)));
             }
             catch(Exception e)
             {
@@ -292,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
             flag = 1;
             editText_Search.setText(""); //Reset of the search bar
             String url = "https://danbooru.donmai.us/tags.json?search[name_matches]=";
+            //String url = "https://danbooru.donmai.us/tags.json?search[name]=";
             String[] tabKeyword = keywords.split(" ");
 
             for (int i = 0; i < tabKeyword.length; i++) {
@@ -323,7 +282,8 @@ public class MainActivity extends AppCompatActivity {
     private void passDataToSearchResultsActivity(String[] tabUrl)
     {
         Intent intent = new Intent(this, SearchResultsActivity.class);
-        intent.putExtra("tabUrl", tabUrl);
+        intent.putExtra("Tab_img", Tab_img);
+        intent.putExtra("Tab_preview", Tab_preview);
         startActivity(intent);
     }
 
@@ -339,11 +299,11 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
 
-    public void Btn_TestOnClick(View view) {
+   /* public void Btn_TestOnClick(View view) {
         Intent openTest = new Intent(this, Activity_SearchResults.class);
         startActivity(openTest);
         //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-    }
+    }*/
 
     private void writeToSearchHistoryfile(String[] tabkeyword) {
         FileOutputStream fos = null;
@@ -488,8 +448,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
-
-
     }
 }
 
