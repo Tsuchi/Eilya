@@ -194,13 +194,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
             String[] simpleArray = TabId_url.toArray(new String[TabId_url.size()]);
-                for (j = 0; j < TabId_url.size(); j++) {
-                    lien = "https://danbooru.donmai.us/posts/";
-                    lien = lien + simpleArray[j] + ".json";
-                    URL url2 = new URL(lien);
-                    flag = 2;
-                    new DownloadTask().execute(url2);
-                }
+            for (j = 0; j < TabId_url.size(); j++) {
+                lien = "https://danbooru.donmai.us/posts/";
+                lien = lien + simpleArray[j] + ".json";
+                URL url2 = new URL(lien);
+                flag = 2;
+                new DownloadTask().execute(url2);
+            }
+            //Temporisation avant de passer tout les liens vers l'activité de Bastien
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //PassDataToSearchResultsActivity(); //La fonction qui va lancer l'activité d'affichage (IL FAUT DECOMMENTER POUR LANCER L'ACTIVITE DE BASTIEN)
         } catch (JSONException e) {
             Log.d("JSON", "JSONException");
         } catch (MalformedURLException e) {
@@ -279,11 +286,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Fonction a appelé quand on aura récupérer toute les info en fonction de la recherche pour les envoyé a Bastien
-    private void passDataToSearchResultsActivity(String[] tabUrl)
+    private void PassDataToSearchResultsActivity()
     {
         Intent intent = new Intent(this, SearchResultsActivity.class);
-        intent.putExtra("Tab_img", Tab_img);
-        intent.putExtra("Tab_preview", Tab_preview);
+        Bundle paquet = new Bundle();
+        paquet.putSerializable("Tab_img", Tab_img);
+        paquet.putSerializable("Tab_preview", Tab_preview);
+        intent.putExtra("paquet", paquet);
         startActivity(intent);
     }
 
