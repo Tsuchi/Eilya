@@ -296,11 +296,11 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }
 
-    public void Btn_TestOnClick(View view) {
+   /* public void Btn_TestOnClick(View view) {
         Intent openTest = new Intent(this, Activity_SearchResults.class);
         startActivity(openTest);
         //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-    }
+    }*/
 
     private void writeToSearchHistoryfile(String[] tabkeyword) {
         FileOutputStream fos = null;
