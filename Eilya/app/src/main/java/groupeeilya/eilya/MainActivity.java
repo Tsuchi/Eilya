@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView lv_searchHistorique;
     private ArrayList<String> TabId_url = new ArrayList<String>();
     private ArrayList<String> Tab_preview = new ArrayList<String>();
+    private ArrayList<String> Tab_img = new ArrayList<String>();
     private String lien_img;
     private DownloadTask jsonconn = null;
     private int flag=1;
@@ -231,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
         String lien;
         int i = 0;
         int j=0;
+
         str = string.toString();
         TabId_url.clear();
         try {
@@ -260,14 +262,18 @@ public class MainActivity extends AppCompatActivity {
     {
             int i=0;
             str = string.toString();
+            String lien_img_full;
             Tab_preview.clear();
             count = 0;
         try
         {
             JSONObject jsonObject = new JSONObject(str);
             lien_img=jsonObject.getString("preview_file_url");
+            lien_img_full = jsonObject.getString("file_url");
             lien_img="https://danbooru.donmai.us"+lien_img;
+            lien_img_full = "https://danbooru.donmai.us"+lien_img_full;
             Tab_preview.add(lien_img);
+            Tab_img.add(lien_img_full);
             Log.d("Work_plz",Tab_preview.get(count));
             count++;
 
