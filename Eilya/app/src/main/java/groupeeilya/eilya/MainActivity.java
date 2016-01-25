@@ -214,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
             str = string.toString();
             String lien_img_full;
             Tab_preview.clear();
+            Tab_img.clear();
             count = 0;
         try
         {
@@ -230,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
             DownloadImage di = new DownloadImage();
             try{
                 di.execute(new URL(Tab_preview.get(count - 1)));
+                //di.execute(new URL(Tab_img.get(count - 1)));
             }
             catch(Exception e)
             {
