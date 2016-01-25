@@ -282,7 +282,8 @@ public class MainActivity extends AppCompatActivity {
     private void passDataToSearchResultsActivity(String[] tabUrl)
     {
         Intent intent = new Intent(this, SearchResultsActivity.class);
-        intent.putExtra("tabUrl", tabUrl);
+        intent.putExtra("Tab_img", Tab_img);
+        intent.putExtra("Tab_preview", Tab_preview);
         startActivity(intent);
     }
 
